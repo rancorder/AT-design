@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ATデザイン｜台本操作型 Web Slides</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app" class="app loading">
+    <header class="topbar" data-presenter-only>
+      <div>
+        <strong>ATデザイン｜販売プレゼン</strong>
+        <span id="modeLabel">Presenter</span>
+      </div>
+      <div class="actions">
+        <button id="openAudience">顧客表示を開く</button>
+        <button id="fitToggle">表示切替</button>
+        <button id="fullscreen">全画面</button>
+      </div>
+    </header>
+
+    <main class="stageWrap">
+      <section class="slideStage" aria-label="slide viewer">
+        <img id="slideImage" alt="presentation slide" />
+        <div id="counter" class="counter"></div>
+      </section>
+
+      <aside class="scriptPanel" data-presenter-only>
+        <div class="scriptHeader">
+          <div>
+            <small>台本</small>
+            <h1 id="scriptTitle"></h1>
+          </div>
+          <div class="navButtons">
+            <button id="prev">←</button>
+            <button id="next">→</button>
+          </div>
+        </div>
+        <div class="scriptBlock first"><h2>一言目</h2><p id="first"></p></div>
+        <div class="scriptBlock"><h2>補足説明</h2><p id="talk"></p></div>
+        <div class="scriptBlock point"><h2>押さえるポイント</h2><p id="point"></p></div>
+        <div class="scriptBlock ask"><h2>相手に投げる質問</h2><p id="ask"></p></div>
+        <div id="thumbs" class="thumbs"></div>
+      </aside>
+    </main>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
