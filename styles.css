@@ -1,0 +1,254 @@
+/* ===========================================================
+   ATデザイン｜販売プレゼン  共通スタイル
+   世界観: 和紙アイボリー × 明朝 × 臙脂(えんじ)
+   =========================================================== */
+:root{
+  --paper:#f6f1e7;
+  --paper-2:#efe7d6;
+  --ink:#1d1714;
+  --ink-2:#6f6056;
+  --enji:#7c1c22;
+  --enji-2:#5c1318;
+  --line:#d8cab6;
+  --wm:#ece3d2;
+  --card:#fffdf8;
+  --card-line:#e6dac8;
+  --panel:#fbf7ef;
+  --shadow:0 18px 50px rgba(0,0,0,.28);
+
+  --serif-jp:"Noto Serif JP","Noto Serif CJK JP",serif;
+  --serif-en:"Cormorant Garamond","Noto Serif JP",serif;
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{
+  background:#0e0e0e;
+  color:var(--ink);
+  font-family:var(--serif-jp);
+  overflow:hidden;
+}
+.app.loading{opacity:0}
+.app{transition:opacity .25s ease}
+
+/* ---------- 上部バー (発表者のみ) ---------- */
+.topbar{
+  height:54px;background:#1a1715;color:#fff;display:flex;align-items:center;
+  justify-content:space-between;padding:0 18px;border-bottom:1px solid rgba(255,255,255,.09)
+}
+.topbar strong{font-weight:700;letter-spacing:.02em}
+.topbar span{font-size:12px;color:#d8c9bc;margin-left:12px;font-family:var(--serif-en);letter-spacing:.12em}
+.actions{display:flex;gap:8px}
+button{
+  border:1px solid rgba(255,255,255,.22);background:#2b2522;color:#fff;border-radius:8px;
+  padding:8px 12px;font-weight:600;cursor:pointer;font-family:var(--serif-jp);font-size:13px
+}
+button:hover{background:#3a312c}
+
+/* ---------- ステージ + 台本パネル ---------- */
+.stageWrap{height:calc(100vh - 54px);display:grid;grid-template-columns:minmax(0,1fr) 392px;gap:0}
+.slideStage{height:100%;display:flex;align-items:center;justify-content:center;
+  padding:22px;background:#0d0d0d;position:relative;overflow:hidden}
+.counter{position:absolute;left:26px;bottom:20px;color:#fff;background:rgba(0,0,0,.5);
+  border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:6px 11px;font-size:12px;
+  font-family:var(--serif-en);letter-spacing:.1em;z-index:5}
+
+.scriptPanel{background:var(--panel);height:100%;overflow:auto;border-left:1px solid #2a211e;padding:18px}
+.scriptHeader{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
+  border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:14px}
+.scriptHeader small{display:block;color:var(--enji);font-weight:700;letter-spacing:.14em;font-size:11px}
+.scriptHeader h1{margin:4px 0 0;font-size:21px;line-height:1.3;font-weight:700}
+.navButtons{display:flex;gap:8px}
+.navButtons button{background:var(--enji);border:0}
+.navButtons button:hover{background:var(--enji-2)}
+.scriptBlock{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;margin:12px 0}
+.scriptBlock h2{font-size:12px;letter-spacing:.1em;color:var(--enji);margin:0 0 8px;font-weight:700}
+.scriptBlock p{white-space:pre-wrap;line-height:1.85;margin:0;font-size:14.5px}
+.scriptBlock.first{border-left:5px solid var(--enji)}
+.scriptBlock.ask{background:#fff7f2}
+.scriptBlock.point{background:#f7f2eb}
+.thumbs{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin-top:16px;padding-bottom:24px}
+.thumb{border:2px solid transparent;background:#fff;padding:0;border-radius:7px;overflow:hidden;
+  aspect-ratio:16/9;cursor:pointer;position:relative}
+.thumb.active{border-color:var(--enji)}
+.thumb span{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-family:var(--serif-en);font-size:18px;color:var(--ink-2);font-weight:600}
+
+/* ===========================================================
+   スライド・キャンバス  (1280 x 720 固定 → JSでscale)
+   =========================================================== */
+.slide-canvas{
+  width:1280px;height:720px;position:absolute;left:50%;top:50%;
+  transform-origin:center center;
+  background:
+    radial-gradient(120% 100% at 88% 8%, #faf6ee 0%, #f4eee2 46%, #efe6d5 100%);
+  color:var(--ink);box-shadow:var(--shadow);overflow:hidden;
+}
+.slide{position:absolute;inset:0;padding:62px 72px 56px;display:flex;flex-direction:column}
+
+/* 透かしロゴ */
+.wm{position:absolute;right:-6px;top:38px;line-height:.86;text-align:center;
+  font-family:var(--serif-en);color:var(--wm);user-select:none;pointer-events:none;z-index:0}
+.wm b{display:block;font-size:330px;font-weight:600;letter-spacing:.02em}
+.wm i{display:block;font-style:normal;font-size:46px;font-weight:500;letter-spacing:.42em;
+  margin-top:-30px;padding-left:.42em}
+
+/* 章ラベル */
+.eyebrow{position:relative;z-index:2;display:inline-flex;align-items:center;gap:14px;
+  color:var(--enji);font-weight:700;letter-spacing:.22em;font-size:17px}
+.eyebrow::after{content:"";width:74px;height:1.5px;background:var(--enji);display:inline-block;position:relative}
+.eyebrow .dia{width:7px;height:7px;background:var(--enji);transform:rotate(45deg);margin-left:-8px}
+
+/* タイトル */
+.s-title{position:relative;z-index:2;margin:22px 0 0;font-weight:600;line-height:1.18;
+  font-size:60px;letter-spacing:.01em}
+.s-title em{font-style:normal;font-weight:900}
+.s-title .en{font-family:var(--serif-en);font-weight:600}
+
+/* 本文ラッパ */
+.s-body{position:relative;z-index:2;flex:1;display:flex;flex-direction:column;justify-content:center}
+
+/* 結び (臙脂) */
+.s-foot{position:relative;z-index:2;margin-top:auto;padding-left:20px;border-left:5px solid var(--enji);
+  color:var(--enji);font-weight:700;font-size:30px;line-height:1.5}
+.s-foot small{font-weight:500;color:var(--ink);font-size:.62em}
+
+/* スライド番号 */
+.s-no{position:absolute;right:72px;bottom:40px;z-index:2;font-family:var(--serif-en);
+  color:var(--ink-2);letter-spacing:.12em;font-size:22px;display:flex;align-items:center;gap:10px}
+.s-no::before{content:"";width:48px;height:1px;background:var(--enji)}
+
+/* ---------- 表紙専用 ---------- */
+.cover .s-title{font-size:82px;margin-top:30px;letter-spacing:-.01em;white-space:nowrap}
+.cover-sub{position:relative;z-index:2;margin:26px 0 0;font-size:25px;color:var(--ink);letter-spacing:.02em}
+.cover-lead{position:relative;z-index:2;margin:36px 0 0;padding-left:22px;border-left:6px solid var(--enji);
+  color:var(--enji);font-weight:700;font-size:29px;line-height:1.5}
+.cover-desc{position:relative;z-index:2;margin:26px 0 0;color:var(--ink-2);font-size:21px;line-height:1.85}
+
+/* ---------- カード群 (並列) ---------- */
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:8px}
+.card{background:var(--card);border:1px solid var(--card-line);border-radius:14px;
+  padding:24px 26px;display:flex;align-items:center;gap:20px;box-shadow:0 6px 18px rgba(90,60,30,.05)}
+.card .ic{flex:0 0 64px;width:64px;height:64px;border-radius:50%;background:#f3ead9;
+  display:flex;align-items:center;justify-content:center}
+.card .ic svg{width:32px;height:32px;stroke:var(--enji);fill:none;stroke-width:1.6}
+.card p{margin:0;font-size:23px;line-height:1.5;font-weight:500}
+
+/* ---------- フロー (順序あり) ---------- */
+.flow{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;align-items:stretch;gap:0;margin:10px 0}
+.flow .step{position:relative;background:var(--card);border:1px solid var(--card-line);border-radius:12px;
+  padding:30px 16px 26px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:11px;margin:0 20px}
+.flow .num{position:absolute;top:-22px;left:50%;transform:translateX(-50%);width:44px;height:44px;border-radius:50%;
+  background:var(--enji);color:#fff;font-family:var(--serif-en);font-size:24px;font-weight:600;
+  display:flex;align-items:center;justify-content:center}
+.flow .step p{margin:0;font-size:22px;line-height:1.45;font-weight:600}
+.flow .step small{font-size:15px;line-height:1.45;color:var(--ink-2)}
+.flow .arr{position:absolute;right:-34px;top:50%;transform:translateY(-50%);z-index:3;display:flex}
+.flow .arr svg{width:30px;height:30px;stroke:var(--enji);fill:none;stroke-width:1.7}
+.flow .step:last-child .arr{display:none}
+
+/* ---------- バリュー (整理/伝える/導く) ---------- */
+.values{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:6px}
+.value{background:var(--card);border:1px solid var(--card-line);border-radius:14px;padding:30px 26px;text-align:center}
+.value .k{font-family:var(--serif-en);color:var(--enji);font-size:22px;font-weight:600;letter-spacing:.1em}
+.value .rule{width:46px;height:1.5px;background:var(--enji);margin:10px auto 18px;position:relative}
+.value .rule::after{content:"";position:absolute;right:-5px;top:-2.5px;width:6px;height:6px;background:var(--enji);transform:rotate(45deg)}
+.value h3{margin:0;font-size:42px;font-weight:900;letter-spacing:.04em}
+.value p{margin:14px 0 0;font-size:18px;color:var(--ink-2);line-height:1.55}
+
+/* ---------- A/B/C ランク (序列) ---------- */
+.rank{display:flex;flex-direction:column;gap:16px;margin-top:6px}
+.rank-row{display:grid;grid-template-columns:128px 116px 1fr;align-items:center;
+  background:var(--card);border:1px solid var(--card-line);border-radius:12px;overflow:hidden;height:78px}
+.rank-row .badge{height:100%;display:flex;align-items:center;justify-content:center;
+  background:var(--enji);color:#fff;font-family:var(--serif-en);font-size:40px;font-weight:600;
+  clip-path:polygon(0 0,100% 0,86% 50%,100% 100%,0 100%)}
+.rank-row.b .badge{background:var(--enji-2)}
+.rank-row.c .badge{background:#6a4d4a}
+.rank-row .tier{color:var(--enji);font-weight:700;font-size:24px;padding-left:8px}
+.rank-row .desc{font-size:24px;font-weight:500;padding-left:24px;border-left:1px solid var(--line);height:46px;display:flex;align-items:center}
+
+/* ---------- 実績ギャラリー (works) ---------- */
+.works{padding:42px 72px 38px}
+.works .s-title{font-size:46px;margin-top:8px}
+.works .s-body{justify-content:flex-start;margin-top:14px}
+.works .s-foot{font-size:22px;margin-top:12px}
+.works .s-foot small{font-size:.82em;color:var(--ink-2);font-weight:500}
+.work-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.work{background:var(--card);border:1px solid var(--card-line);border-radius:12px;overflow:hidden;
+  box-shadow:0 6px 16px rgba(90,60,30,.06)}
+.work img{display:block;width:100%;height:126px;object-fit:cover;object-position:center top}
+.work .cap{padding:9px 14px 11px;display:flex;flex-direction:column;gap:6px}
+.work .cap .nm{font-size:15.5px;font-weight:600;line-height:1.3;min-height:34px;display:flex;align-items:center}
+.work .cap .ty{align-self:flex-start;font-size:11px;font-weight:700;color:var(--enji);
+  border:1px solid var(--enji);border-radius:999px;padding:2px 11px;letter-spacing:.04em}
+
+/* ---------- 実績 (旧KPI版・予備) ---------- */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:4px}
+.stat{background:var(--card);border:1px solid var(--card-line);border-radius:14px;padding:22px 18px;text-align:center}
+.stat b{display:block;font-family:var(--serif-en);font-size:58px;font-weight:600;color:var(--enji);line-height:1}
+.stat .jp{font-family:var(--serif-jp);font-size:40px;font-weight:900;color:var(--enji)}
+.stat span{display:block;margin-top:8px;font-size:18px;color:var(--ink-2)}
+.tags{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+.tags .t{border:1.5px solid var(--enji);color:var(--enji);border-radius:999px;
+  padding:9px 20px;font-size:20px;font-weight:600;background:rgba(124,28,34,.03)}
+.note{margin-top:22px;font-size:20px;color:var(--ink-2);line-height:1.6}
+.note b{color:var(--ink);font-weight:700}
+
+/* ---------- メニュー 3列 ---------- */
+.menu{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:6px}
+.menu .m{background:var(--card);border:1px solid var(--card-line);border-radius:14px;padding:28px 24px;text-align:center}
+.menu .ic{width:74px;height:74px;border-radius:50%;background:#f3ead9;margin:0 auto 16px;
+  display:flex;align-items:center;justify-content:center}
+.menu .ic svg{width:38px;height:38px;stroke:var(--enji);fill:none;stroke-width:1.5}
+.menu .rule{width:100%;height:1px;background:var(--line);margin:0 0 14px}
+.menu h3{margin:0;font-size:26px;font-weight:700}
+.menu p{margin:10px 0 0;font-size:17px;color:var(--ink-2);line-height:1.5}
+.wp-badge{display:inline-block;margin-top:24px;border:1.5px solid var(--enji);color:var(--enji);
+  border-radius:8px;padding:8px 18px;font-size:18px;font-weight:700;font-family:var(--serif-jp)}
+
+/* ---------- チェックリスト (効果) ---------- */
+.checks{display:flex;flex-direction:column;gap:2px;margin-top:4px}
+.check{display:flex;align-items:center;gap:22px;padding:18px 4px;border-bottom:1px solid #ecdfce}
+.check:last-child{border-bottom:0}
+.check .ck{flex:0 0 50px;width:50px;height:50px;border-radius:50%;border:1.8px solid var(--enji);
+  display:flex;align-items:center;justify-content:center}
+.check .ck svg{width:26px;height:26px;stroke:var(--enji);fill:none;stroke-width:2.4}
+.check p{margin:0;font-size:27px;font-weight:500}
+.check p b{font-weight:800}
+
+/* ---------- CTA / 引用 ---------- */
+.quote{position:relative;z-index:2;margin:6px 0 0;border:1.5px solid var(--enji);border-radius:14px;
+  padding:38px 56px;text-align:center}
+.quote::before,.quote::after{position:absolute;font-family:var(--serif-en);color:#d8b9a0;font-size:90px;line-height:1}
+.quote::before{content:"\201C";left:18px;top:-6px}
+.quote::after{content:"\201D";right:18px;bottom:-44px}
+.quote p{margin:0;font-size:38px;font-weight:800;line-height:1.45}
+.cta-desc{position:relative;z-index:2;margin:24px 0 0;font-size:21px;color:var(--ink-2);line-height:1.7;text-align:center}
+.cta-free{position:relative;z-index:2;margin:22px auto 0;display:inline-flex;align-items:center;gap:14px;
+  background:var(--enji);color:#fff;border-radius:12px;padding:16px 34px;font-size:25px;font-weight:700;
+  box-shadow:0 10px 26px rgba(124,28,34,.28)}
+.cta-free .yen{font-size:18px;font-weight:600;opacity:.92;border-left:1px solid rgba(255,255,255,.5);padding-left:14px}
+.cta-wrap{text-align:center}
+.cta-close{position:relative;z-index:2;margin:26px 0 0;text-align:center;font-size:30px;font-weight:700;letter-spacing:.04em}
+
+/* ===========================================================
+   顧客ビュー  (?view=audience)
+   =========================================================== */
+.audience .topbar,.audience .scriptPanel,.audience .counter{display:none}
+.audience .stageWrap{height:100vh;display:block}
+.audience .slideStage{height:100vh;padding:0;background:#000}
+.audience .slide-canvas{box-shadow:none}
+
+@media(max-width:1100px){
+  .stageWrap{grid-template-columns:1fr}
+  .scriptPanel{position:absolute;right:10px;top:64px;bottom:10px;width:min(392px,calc(100vw - 20px));
+    box-shadow:var(--shadow);border-radius:16px;z-index:8}
+  .slideStage{padding:10px}
+}
+@media print{
+  body{background:#fff;overflow:visible}
+  .topbar,.scriptPanel,.counter{display:none!important}
+  .stageWrap{display:block;height:auto}
+  .slideStage{height:100vh;page-break-after:always;background:#fff;padding:0}
+}
